@@ -1,0 +1,8 @@
+<h2>Cadastro de Carros</h2>
+<form>
+  <input type="text" [(ngModel)]="novoCarro.nome" name="nome" placeholder="Nome do carro" required>
+  <input type="text" [(ngModel)]="novoCarro.marca" name="marca" placeholder="Marca" required>
+  <input type="text" [(ngModel)]="novoCarro.placa" name="placa" placeholder="Placa" required>
+  <input type="number" [(ngModel)]="novoCarro.valorLocacao" name="valorLocacao" placeholder="Valor da locação" required>
+  <button type="submit">Cadastrar</button>
+</form>

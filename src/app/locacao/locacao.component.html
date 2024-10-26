@@ -1,0 +1,33 @@
+<div>
+    <h2>Registrar Locação</h2>
+    <form (ngSubmit)="registrarLocacao()">
+      <label for="cliente">Cliente:</label>
+      <select id="cliente" [(ngModel)]="locacao.cliente" name="cliente">
+        <option *ngFor="let cliente of clientes" [ngValue]="cliente">
+          {{ cliente.nome }}
+        </option>
+      </select>
+  
+      <label for="carro">Carro:</label>
+      <select id="carro" [(ngModel)]="locacao.carro" name="carro">
+        <option *ngFor="let carro of carros" [ngValue]="carro">
+          {{ carro.nome }} - {{ carro.placa }}
+        </option>
+      </select>
+  
+      <label for="dias">Dias de Locação:</label>
+      <input type="number" [(ngModel)]="locacao.dias" name="dias" (change)="calcularValorTotal()" min="1" required>
+  
+      <p>Valor Total: R$ {{ locacao.valorTotal }}</p>
+  
+      <button type="submit">Registrar Locação</button>
+    </form>
+  
+    <h3>Locações Registradas</h3>
+    <ul>
+      <li *ngFor="let locacao of locacoesRegistradas">
+        {{ locacao.cliente.nome }} alugou {{ locacao.carro.nome }} por {{ locacao.dias }} dias - Valor Total: R$ {{ locacao.valorTotal }}
+      </li>
+    </ul>
+  </div>
+  
