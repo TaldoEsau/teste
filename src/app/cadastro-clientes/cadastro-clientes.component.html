@@ -1,6 +1,6 @@
 <h2>Cadastro de Clientes</h2>
-<form>
+<form (ngSubmit)="cadastrarCliente()" #clienteForm="ngForm">
   <input type="text" [(ngModel)]="novoCliente.nome" name="nome" placeholder="Nome do cliente" required>
   <input type="text" [(ngModel)]="novoCliente.documento" name="documento" placeholder="Documento" required>
-  <button type="submit">Cadastrar</button>
+  <button type="submit" [disabled]="clienteForm.invalid">Cadastrar</button>
 </form>

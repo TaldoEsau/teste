@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DadosService, Cliente } from '../dados.service';
 
 @Component({
   selector: 'app-cadastro-clientes',
@@ -6,8 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./cadastro-clientes.component.css']
 })
 export class CadastroClientesComponent {
-  novoCliente = {
+  novoCliente: Cliente = {
+    id: 0,
     nome: '',
     documento: ''
   };
+
+  constructor(private dadosService: DadosService) {}
+
+  cadastrarCliente() {
+    const novoId = this.dadosService.getClientes().length + 1;
+    const clienteParaCadastrar = { ...this.novoCliente, id: novoId };
+    this.dadosService.adicionarCliente(clienteParaCadastrar);
+    this.novoCliente = { id: 0, nome: '', documento: '' };
+    alert('Cliente cadastrado com sucesso!');
+  }
 }

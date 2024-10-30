@@ -1,18 +1,5 @@
-import { Component } from '@angular/core';
-
-interface Carro {
-  id: number;
-  nome: string;
-  marca: string;
-  placa: string;
-  valorLocacao: number;
-}
-
-interface Cliente {
-  id: number;
-  nome: string;
-  documento: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { DadosService, Carro, Cliente } from '../dados.service';
 
 interface Locacao {
   cliente: Cliente;
@@ -26,25 +13,29 @@ interface Locacao {
   templateUrl: './locacao.component.html',
   styleUrls: ['./locacao.component.css']
 })
-export class LocacaoComponent {
-  carros: Carro[] = [
-    { id: 1, nome: 'Carro A', marca: 'Marca A', placa: 'ABC-1234', valorLocacao: 100 },
-    { id: 2, nome: 'Carro B', marca: 'Marca B', placa: 'XYZ-5678', valorLocacao: 150 }
-  ];
-
-  clientes: Cliente[] = [
-    { id: 1, nome: 'Cliente A', documento: '123.456.789-00' },
-    { id: 2, nome: 'Cliente B', documento: '987.654.321-00' }
-  ];
-
+export class LocacaoComponent implements OnInit {
+  carros: Carro[] = [];
+  clientes: Cliente[] = [];
   locacao: Locacao = {
-    cliente: this.clientes[0],
-    carro: this.carros[0],
+    cliente: {} as Cliente,
+    carro: {} as Carro,
     dias: 1,
     valorTotal: 0
   };
-
   locacoesRegistradas: Locacao[] = [];
+
+  constructor(private dadosService: DadosService) {}
+
+  ngOnInit(): void {
+    this.carros = this.dadosService.getCarros();
+    this.clientes = this.dadosService.getClientes();
+
+    this.dadosService.carros$.subscribe((carros) => this.carros = carros);
+    this.dadosService.clientes$.subscribe((clientes) => this.clientes = clientes);
+
+    this.locacao.cliente = this.clientes[0];
+    this.locacao.carro = this.carros[0];
+  }
 
   calcularValorTotal(): void {
     this.locacao.valorTotal = this.locacao.dias * this.locacao.carro.valorLocacao;
